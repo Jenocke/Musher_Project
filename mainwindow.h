@@ -28,7 +28,7 @@ class MainWindow : public QMainWindow
 
         QHBoxLayout *mainMenuLayout;
         QVBoxLayout *mainMenuSubLayout;
-        QFormLayout *musherLayout;
+        QFormLayout *musherFormLayout;
         QVBoxLayout *dogTeamLayout;
         QVBoxLayout *listingLayout;
 
@@ -39,6 +39,12 @@ class MainWindow : public QMainWindow
 
         QLineEdit *champNom;
         QLineEdit *champPrenom;
+        QLabel *labelMandatory;
+        QPushButton *buttonCancel;
+        QPushButton *buttonReset;
+        QPushButton *buttonAccept;
+        QVBoxLayout *musherMainLayout;
+        QHBoxLayout *subLayoutMusherForm;
 
         void generateMenu();
         void generateMainMenu();

@@ -111,15 +111,31 @@ void MainWindow::newMusherForm()
 
     removeLayout(centralZone);
     generateMusherLayout();
-    centralZone->setLayout(musherLayout);
+    centralZone->setLayout(musherMainLayout);
 }
 
 void MainWindow::generateMusherLayout()
 {
-    musherLayout = new QFormLayout();
+    musherMainLayout = new QVBoxLayout();
+    musherFormLayout = new QFormLayout();
     champNom = new QLineEdit();
     champPrenom = new QLineEdit();
+    labelMandatory = new QLabel();
 
-    musherLayout->addRow("Nom : ", champNom);
-    musherLayout->addRow("Prénom : ", champPrenom);
+    subLayoutMusherForm = new QHBoxLayout();
+    buttonCancel = new QPushButton("Annuler");
+    buttonReset = new QPushButton("Réinitialiser");
+    buttonAccept = new QPushButton("OK");
+    subLayoutMusherForm->addWidget(buttonCancel);
+    subLayoutMusherForm->addWidget(buttonReset);
+    subLayoutMusherForm->addWidget(buttonAccept);
+
+    labelMandatory->setText("Les champs précédés d'un * sont obligatoires.");
+
+    musherFormLayout->addRow(labelMandatory);
+    musherFormLayout->addRow("* Nom : ", champNom);
+    musherFormLayout->addRow("* Prénom : ", champPrenom);
+
+    musherMainLayout->addLayout(musherFormLayout);
+    musherMainLayout->addLayout(subLayoutMusherForm);
 }
