@@ -2,6 +2,8 @@
 
 MainWindow::MainWindow()
 {
+    this->setFixedHeight(500);
+    this->setFixedWidth(500);
         //création du SDI
     centralZone = new QWidget;
     setCentralWidget(centralZone);
@@ -15,6 +17,8 @@ MainWindow::MainWindow()
     //connection des actions aux slots
         connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
         connect(buttonQuit, SIGNAL(clicked()), qApp, SLOT(quit()));
+        connect(actionNewMusher ,SIGNAL(triggered()), this, SLOT(newMusherForm()));
+        connect(buttonAddMusher, SIGNAL(clicked()), this, SLOT(newMusherForm()));
 }
 
 void MainWindow::generateMenu()
@@ -56,18 +60,66 @@ void MainWindow::generateMenu()
 
 void MainWindow::generateMainMenu()
 {
-    mainMenuLayout = new QVBoxLayout();
+
+    mainMenuLayout = new QHBoxLayout();
+    mainMenuSubLayout = new QVBoxLayout;
 
     buttonAddMusher = new QPushButton("Ajouter Musher");
+        buttonAddMusher->setFixedWidth(200);
+        buttonAddMusher->setFixedHeight(80);
     buttonAddDogTeam = new QPushButton("Ajouter Attelage");
+        buttonAddDogTeam->setFixedWidth(200);
+        buttonAddDogTeam->setFixedHeight(80);
     buttonDisplayListing = new QPushButton("Afficher le listing");
+        buttonDisplayListing->setFixedWidth(200);
+        buttonDisplayListing->setFixedHeight(80);
     buttonQuit = new QPushButton("Quitter");
+        buttonQuit->setFixedWidth(200);
+        buttonQuit->setFixedHeight(80);
 
+    mainMenuSubLayout->addWidget(buttonAddMusher);
+    mainMenuSubLayout->addWidget(buttonAddDogTeam);
+    mainMenuSubLayout->addWidget(buttonDisplayListing);
+    mainMenuSubLayout->addWidget(buttonQuit);
 
-    mainMenuLayout->addWidget(buttonAddMusher);
-    mainMenuLayout->addWidget(buttonAddDogTeam);
-    mainMenuLayout->addWidget(buttonDisplayListing);
-    mainMenuLayout->addWidget(buttonQuit);
+    mainMenuLayout->addLayout(mainMenuSubLayout);
+}
 
+void MainWindow::removeLayout (QWidget* widget)
+{
+    QLayout* layout = widget->layout();
+    if (layout != NULL)
+    {
 
+        QLayoutItem *item;
+        item = layout->takeAt(0);
+        QLayout *subLayout = item->layout();
+    while ((item = subLayout->takeAt(0)) != NULL)
+    {
+        delete item->widget();
+
+        layout->removeItem (item);
+    }
+    delete subLayout;
+    delete layout;
+    delete item;
+    }
+}
+
+void MainWindow::newMusherForm()
+{
+
+    removeLayout(centralZone);
+    generateMusherLayout();
+    centralZone->setLayout(musherLayout);
+}
+
+void MainWindow::generateMusherLayout()
+{
+    musherLayout = new QFormLayout();
+    champNom = new QLineEdit();
+    champPrenom = new QLineEdit();
+
+    musherLayout->addRow("Nom : ", champNom);
+    musherLayout->addRow("Prénom : ", champPrenom);
 }

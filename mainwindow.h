@@ -2,10 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
+#include <layoutsformlisting.h>
+#include <iostream>
 
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
+
     public:
         MainWindow();
 
@@ -22,8 +26,9 @@ class MainWindow : public QMainWindow
         QAction *actionListing;
         QAction *actionPreference;
 
-        QVBoxLayout *mainMenuLayout;
-        QVBoxLayout *musherLayout;
+        QHBoxLayout *mainMenuLayout;
+        QVBoxLayout *mainMenuSubLayout;
+        QFormLayout *musherLayout;
         QVBoxLayout *dogTeamLayout;
         QVBoxLayout *listingLayout;
 
@@ -32,12 +37,22 @@ class MainWindow : public QMainWindow
         QPushButton *buttonDisplayListing;
         QPushButton *buttonQuit;
 
+        QLineEdit *champNom;
+        QLineEdit *champPrenom;
+
         void generateMenu();
         void generateMainMenu();
         void generateMusherLayout();
         void generateDogTeamLayout();
         void generateListingLayout();
+        void removeLayout(QWidget*);
+
+
+
+private slots:
+            void newMusherForm();
 };
+
 
 
 
